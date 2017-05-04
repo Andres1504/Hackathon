@@ -1,0 +1,51 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title></title>
+    <link href="css/Menu.css" rel="stylesheet" />
+
+
+    <asp:ContentPlaceHolder id="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body style="background-color:#D6D6E2">
+    <form id="form1" runat="server">
+   
+        <div class="logo">
+            <img src="img/HealthSys-01.png" style="width:280px; height:80px" />
+        </div>
+
+    <div>
+
+        <ul>
+              <li><a class="active" href="Principal.aspx" >Inicio</a></li>
+              <li><a class="active" href="Principal.aspx" >Agendar cita</a></li>
+              <li><a class="active" href="Principal.aspx" >Ver historial</a></li>
+              <li><a class="active" href="Principal.aspx" >Comentarios al médico</a></li>
+
+              <li style="float:right; border-right:1px solid white;"><a class="active" href="Principal.aspx" >Formular receta</a></li>
+              <li style="float:right; border-right:1px solid white;"><a class="active" href="Principal.aspx" >Consultar receta</a></li>
+              <li style="float:right; border-right:1px solid white;"><a class="active" href="Principal.aspx" >Comentarios al médico</a></li>
+            
+
+              <li class="dropdown" style="float:right; border-right:1px solid white;">
+                <a href="javascript:void(0)" class="dropbtn">Iniciar Sesión</a>
+                <div class="dropdown-content">
+                  <a href="Sesion.aspx">Pacientes</a>
+                  <a href="SesionMedico.aspx">Medicos</a>
+                </div>
+              </li>
+           
+        </ul>
+        <asp:ContentPlaceHolder id="ContentPlaceHolder1" runat="server">
+        
+        </asp:ContentPlaceHolder>
+    </div>
+    </form>
+
+</body>
+</html>
