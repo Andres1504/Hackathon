@@ -1,0 +1,242 @@
+/*
+Created		03/05/2017
+Modified		04/05/2017
+Project		
+Model		
+Company		
+Author		
+Version		
+Database		MS SQL 7 
+*/
+
+
+Drop table [Calificacion] 
+go
+Drop table [AgendarConsulta] 
+go
+Drop table [Cometario] 
+go
+Drop table [EspecilidadXDoctor] 
+go
+Drop table [Especialidad] 
+go
+Drop table [Prescripcion] 
+go
+Drop table [Administrador] 
+go
+Drop table [Medicamento] 
+go
+Drop table [Receta] 
+go
+Drop table [Consultorio] 
+go
+Drop table [Consulta] 
+go
+Drop table [Doctor] 
+go
+Drop table [Domicilio] 
+go
+Drop table [Paciente] 
+go
+
+
+Create table [Paciente] (
+	[IdPaciente] Integer Identity(1,1) NOT NULL,
+	[IdDomicilio] Integer NOT NULL,
+	[Nombre] Varchar(20) NOT NULL,
+	[ApPaterno] Varchar(20) NOT NULL,
+	[ApMaterno] Varchar(20) NOT NULL,
+	[Usuario] Varchar(20) NOT NULL,
+	[Contrasena] Varchar(20) NOT NULL,
+	[FechaNacimiento] Datetime NOT NULL,
+	[Sexo] Varchar(10) NOT NULL,
+	[Correo] Varchar(30) NOT NULL,
+	[Telefono] Varchar(10) NOT NULL,
+Primary Key  ([IdPaciente])
+) 
+go
+
+Create table [Domicilio] (
+	[IdDomicilio] Integer Identity(1,1) NOT NULL,
+	[Calle] Varchar(30) NOT NULL,
+	[NumExterior] Integer NOT NULL,
+	[NumInterior] Varchar(5) NULL,
+	[Colonia] Varchar(30) NOT NULL,
+	[Cp] Varchar(5) NOT NULL,
+	[Ciudad] Varchar(20) NOT NULL,
+Primary Key  ([IdDomicilio])
+) 
+go
+
+Create table [Doctor] (
+	[IdDoctor] Integer Identity(1,1) NOT NULL,
+	[Cedula_Doctor] Varchar(20) NOT NULL,
+	[Nombre] Varchar(20) NOT NULL,
+	[ApPaterno] Varchar(20) NOT NULL,
+	[ApMaterno] Varchar(20) NOT NULL,
+	[Usuario] Varchar(30) NOT NULL,
+	[Password] Varchar(30) NOT NULL,
+	[Correo] Varchar(20) NOT NULL,
+	[Estado] Bit NOT NULL,
+Primary Key  ([IdDoctor])
+) 
+go
+
+Create table [Consulta] (
+	[IdConsulta] Integer Identity(1,1) NOT NULL,
+	[IdDoctor] Integer NOT NULL,
+	[IdPaciente] Integer NOT NULL,
+	[IdConsultorio] Integer NOT NULL,
+	[Sintomas] Text NOT NULL,
+	[Diagnostico] Text NOT NULL,
+	[Costo_Consulta] Char(10) NOT NULL,
+	[FechaConsulta] Datetime NOT NULL,
+Primary Key  ([IdConsulta])
+) 
+go
+
+Create table [Consultorio] (
+	[IdConsultorio] Integer Identity(1,1) NOT NULL,
+	[IdDoctor] Integer NOT NULL,
+	[IdDomicilio] Integer NOT NULL,
+	[Telefono] Varchar(10) NOT NULL,
+	[Horario] Varchar(15) NOT NULL,
+	[Latitud] Varchar(20) NOT NULL,
+	[Longitud] Varchar(20) NOT NULL,
+Primary Key  ([IdConsultorio])
+) 
+go
+
+Create table [Receta] (
+	[IdReceta] Integer Identity(1,1) NOT NULL,
+	[IdConsulta] Integer NOT NULL,
+	[IdPaciente] Integer NOT NULL,
+	[IdDoctor] Integer NOT NULL,
+	[Observaciones] Text NOT NULL,
+Primary Key  ([IdReceta])
+) 
+go
+
+Create table [Medicamento] (
+	[IdMedicamento] Integer Identity(1,1) NOT NULL,
+	[Nombre] Varchar(20) NOT NULL,
+	[Presentacion] Varchar(10) NOT NULL,
+	[Cantidad] Varchar(15) NOT NULL,
+Primary Key  ([IdMedicamento])
+) 
+go
+
+Create table [Administrador] (
+	[IdAdministrador] Integer Identity(1,1) NOT NULL,
+	[Usuario] Varchar(20) NOT NULL,
+	[Contrasena] Varchar(20) NOT NULL,
+Primary Key  ([IdAdministrador])
+) 
+go
+
+Create table [Prescripcion] (
+	[IdPrescripcion] Integer Identity(1,1) NOT NULL,
+	[IdReceta] Integer NOT NULL,
+	[IdMedicamento] Integer NOT NULL,
+	[Dosis] Varchar(20) NOT NULL,
+	[Frecuencia] Varchar(20) NOT NULL,
+	[Duracion] Integer NOT NULL,
+Primary Key  ([IdPrescripcion])
+) 
+go
+
+Create table [Especialidad] (
+	[IdEspecialidad] Integer Identity(1,1) NOT NULL,
+	[Especialidad] Varchar(30) NOT NULL,
+Primary Key  ([IdEspecialidad])
+) 
+go
+
+Create table [EspecilidadXDoctor] (
+	[IdEspecialidad] Integer NOT NULL,
+	[IdDoctor] Integer NOT NULL,
+
+) 
+go
+
+Create table [Cometario] (
+	[IdComentario] Integer NOT NULL,
+	[IdPaciente] Integer NOT NULL,
+	[IdDoctor] Integer NOT NULL,
+	[Comentario] Text NOT NULL,
+	[Calificacion] Integer NOT NULL,
+Primary Key  ([IdComentario])
+) 
+go
+
+Create table [AgendarConsulta] (
+	[IdConsultaAgendada] Integer Identity(1,1) NOT NULL,
+	[IdConsultorio] Integer NOT NULL,
+	[IdPaciente] Integer NOT NULL,
+	[FechaAgendar] Datetime NOT NULL,
+	[HoraConsulta] Varchar(10) NOT NULL,
+Primary Key  ([IdConsultaAgendada])
+) 
+go
+
+Create table [Calificacion] (
+	[IdCalificacion] Integer Identity(1,1) NOT NULL,
+	[CalificacionTotal] Float NOT NULL,
+	[IdDoctor] Integer NOT NULL,
+Primary Key  ([IdCalificacion])
+) 
+go
+
+
+Alter table [Consulta] add  foreign key([IdPaciente]) references [Paciente] ([IdPaciente]) 
+go
+Alter table [Receta] add  foreign key([IdPaciente]) references [Paciente] ([IdPaciente]) 
+go
+Alter table [Cometario] add  foreign key([IdPaciente]) references [Paciente] ([IdPaciente]) 
+go
+Alter table [AgendarConsulta] add  foreign key([IdPaciente]) references [Paciente] ([IdPaciente]) 
+go
+Alter table [Consultorio] add  foreign key([IdDomicilio]) references [Domicilio] ([IdDomicilio]) 
+go
+Alter table [Paciente] add  foreign key([IdDomicilio]) references [Domicilio] ([IdDomicilio]) 
+go
+Alter table [Consulta] add  foreign key([IdDoctor]) references [Doctor] ([IdDoctor]) 
+go
+Alter table [Consultorio] add  foreign key([IdDoctor]) references [Doctor] ([IdDoctor]) 
+go
+Alter table [Receta] add  foreign key([IdDoctor]) references [Doctor] ([IdDoctor]) 
+go
+Alter table [EspecilidadXDoctor] add  foreign key([IdDoctor]) references [Doctor] ([IdDoctor]) 
+go
+Alter table [Cometario] add  foreign key([IdDoctor]) references [Doctor] ([IdDoctor]) 
+go
+Alter table [Calificacion] add  foreign key([IdDoctor]) references [Doctor] ([IdDoctor]) 
+go
+Alter table [Receta] add  foreign key([IdConsulta]) references [Consulta] ([IdConsulta]) 
+go
+Alter table [Consulta] add  foreign key([IdConsultorio]) references [Consultorio] ([IdConsultorio]) 
+go
+Alter table [AgendarConsulta] add  foreign key([IdConsultorio]) references [Consultorio] ([IdConsultorio]) 
+go
+Alter table [Prescripcion] add  foreign key([IdReceta]) references [Receta] ([IdReceta]) 
+go
+Alter table [Prescripcion] add  foreign key([IdMedicamento]) references [Medicamento] ([IdMedicamento]) 
+go
+Alter table [EspecilidadXDoctor] add  foreign key([IdEspecialidad]) references [Especialidad] ([IdEspecialidad]) 
+go
+
+
+Set quoted_identifier on
+go
+
+
+Set quoted_identifier off
+go
+
+
+/* Roles permissions */
+
+
+/* Users permissions */
+
+
